@@ -20,7 +20,7 @@ create TABLE lots(
 );
 CREATE INDEX categ_index on lots(lot_categ_id);
 CREATE INDEX user_index on lots (lot_user_id);
-CREATE INDEX winner_index oon lots(lot_winner_id);
+CREATE INDEX winner_index on lots(lot_winner_id);
 
 create TABLE users(
     user_id int AUTO_INCREMENT,
@@ -40,18 +40,18 @@ create TABLE rate(
     lot_id int,
     user_id int,
     rate_date datetime,
-    rate_price int,
+    rate_price int
 );
 create INDEX rate_lot_index on rate(lot_id);
 create INDEX rate_user_index on rate(user_id);
 
-ALTER TABLE 'lots'
+ALTER TABLE lots
 ADD CONSTRAINT lots_fk1 FOREIGN  KEY (lot_user_id) REFERENCES users(user_id);
-Alter TABLE 'lots'
+Alter TABLE lots
 ADD CONSTRAINT lots_fk2 FOREIGN  key (lot_categ_id) REFERENCES categories(categ_id);
-ALTER TABLE 'lots'
-ADD CONSTRAINT lots_fk3 FOREIGN  key (lot_winner_id) REFERENCES categories(user_id);
+ALTER TABLE lots
+ADD CONSTRAINT lots_fk3 FOREIGN  key (lot_winner_id) REFERENCES users(user_id);
 
 
-ALTER TABLE 'rate'
-ADD CONSTRAINT rate_fk1 FOREIGN KEY (user_id) REFERENCES user(user_id);
+ALTER TABLE rate
+ADD CONSTRAINT rate_fk1 FOREIGN KEY (user_id) REFERENCES users(user_id);
