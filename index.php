@@ -13,5 +13,6 @@ $layout_content = include_template( 'layout.php',
     'categories_list'=>$categories_list
 ]);
 print ($layout_content);
+
 ?>
 

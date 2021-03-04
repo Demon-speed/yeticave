@@ -23,7 +23,7 @@ $data_list = [
 [
 'name'=>'DC Ply Mens 2016/2017 Snowboard',
 'categories'=>'Доски и лыжи',
-'price'=>'159999',
+'price'=>'15999',
 'url'=>'img/lot-2.jpg',
 ],
 [
@@ -71,6 +71,20 @@ function sum_format($number)
         return $price_n;
     }
 
+}
+
+function timer_to(){
+    $time_now = strtotime('now');
+    $time_tomorrow= strtotime('tomorrow');
+
+    $time_sub = $time_tomorrow-$time_now;
+
+    $time_minutes=floor( $time_sub/60);
+    $time_hours=floor($time_minutes/60);
+    $time_minutes=$time_minutes-$time_hours*60;
+
+    $result=sprintf('%02d:%02d',$time_hours,$time_minutes);
+    return $result;
 }
 
 function include_template($name, $data) {
