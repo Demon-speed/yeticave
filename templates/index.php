@@ -24,7 +24,7 @@
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?=$categories_list[$category['categ_name']];?></span>
-                        <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$data['lot_name']?></a></h3>
+                        <h3 class="lot__title"><a class="text-link" href="lots.php?id=<?=$data['lot_id']?>"><?=$data['lot_name']?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount"><?= $data['lot_first_price'];?></span>
