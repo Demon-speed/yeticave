@@ -3,11 +3,11 @@ require_once ('functions.php');
 require 'data.php';
 
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-    $required_fields = ['lot-name','category','lot_discr','lot-rate','lot_step','lot-date'];
+    $required_fields = ['lot-name', 'category', 'message', 'lot-rate', 'lot-step', 'lot-date'];
     $error = [];
     $lot_name = $_POST['lot-name'] ? : '';
     $category = $_POST['category'] ? : 'Выберите категорию';
-    $message = $_POST['lot_discr'] ? : '';
+    $message = $_POST['message'] ? : '';
     $lot_rate = $_POST['lot-rate'] ? : '';
     $lot_step = $_POST['lot-step'] ? : '';
     foreach ($required_fields as $field){
@@ -35,6 +35,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         }
 
     }
+    if(isset($_FILES['lotPhotos'])){
+        $finfo = finfo_open(FILEINFO_MINE_TYPE);
+        $file_name = $_FILES['lotPhotos']['name'];
+        $file_path = __DIR__ . '/img/';
+        $file_tmpname = $_FILES['lotPhotos']['tmp_name'];
+        $file_type = finfo_file($finfo, $file_tmpname);
+        if($file_type == 'image/gif'){
+            move_uploaded_file($_FILES['lotPhotos']['tmp_name'], $file_path . $file_name);
+        }
+        $file_url = 'img/' . $file_name;
+    }
     if (count($errors) !== 0) {
     $page_content = include_template('add.php',
     ['errors' => $errors,
@@ -55,13 +66,24 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
             'lot'=>$lot,
             'data_list'=> $data_list,
             'timer_to'=>$timer_to]);
+        $con = mysqli_connect('127.0.0.1', 'root', '','yeticave');
+        mysqli_set_charset($con,'utf8');
+        $sql = "SELECT categ_id FROM categories WHERE categ_name='{$lot['category']}' ";
+        $result = mysqli_query($con,$sql);
+        $lot['category'] = mysqli_fetch_assoc($result)['categ_id'];
+
+        $sql = "INSERT INTO lots(lot_image, lot_name, lot_cr_date, lot_comp_date,lot_step, lot_start_price, lot_discr, lot_user_id, lot_winner_id,  lot_categ_id  )
+        VALUE ( '{$lot['image']}','{$lot['name']}',  '01.01.2001', '{$lot['timer']}','{$lot['rate']}', '{$lot['start_price']}','{$lot['description']}', '12345', '12345', '{$lot['category']}' )";
+        $result = mysqli_query($con, $sql);
+        if(!$result)
+            echo mysqli_error($con);
     }
 }
 
     else{
     $page_content =include_template('add.php',
     ['categories_list'=>$categories_list,
-        'data_list'=>$data_list;
+        'data_list'=>$data_list,
         'timer_to'=>$timer_to]);
     }
 

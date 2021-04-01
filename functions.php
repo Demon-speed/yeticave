@@ -1,5 +1,5 @@
 <?php
-require('data.php');
+require_once ('data.php');
 
 
 function sum_format($number)

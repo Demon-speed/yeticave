@@ -21,7 +21,7 @@
             <select id="category" name="category">
                 <option>Выберите категорию</option>
                 <?php foreach ($categories_list as $val):?>
-                <option><?= val['categ-name'];?></option>
+                <option><?= $val['categ_name'];?></option>
                 <?php endforeach; ?>
             </select>
             <span class="form__error">Выберите категорию</span>
@@ -53,12 +53,12 @@
             <input id="lot-rate" type="text" name="lot-rate" placeholder="0">
             <span class="form__error">Введите начальную цену</span>
         </div>
-        <div class="form__item form__item--small"><?= empty($errors['lot-step'])?"": "form__item--invalid"?>">
+        <div class="form__item form__item--small<?= empty($errors['lot-step'])?"": "form__item--invalid"?>">
             <label for="lot-step">Шаг ставки <sup>*</sup></label>
             <input id="lot-step" type="text" name="lot-step" placeholder="0">
             <span class="form__error">Введите шаг ставки</span>
         </div>
-        <div class="form__item"><?= empty($errors['lot-date'])?"": "form__item--invalid"?>">
+        <div class="form__item <?= empty($errors['lot-date'])?"": "form__item--invalid"?>">
             <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
             <input class="form__input-date" id="lot-date" type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
             <span class="form__error">Введите дату завершения торгов</span>
